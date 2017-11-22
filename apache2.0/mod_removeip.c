@@ -40,8 +40,12 @@ static int change_remote_ip(request_rec *r) {
     if (!cfg->enable)
         return DECLINED;
 
+#if AP_SERVER_MINORVERSION_NUMBER>4 || (AP_SERVER_MINORVERSION_NUMBER==4 && AP_SERVER_PATCHLEVEL_NUMBER>=19)
+    r->useragent_ip = apr_pstrdup (r->pool, "127.0.0.1");
+#else
     r->connection->remote_ip = apr_pstrdup(r->connection->pool, "localhost");
     r->connection->remote_addr->sa.sin.sin_addr.s_addr = inet_addr("127.0.0.1");
+#endif
 
     return DECLINED;
 }
