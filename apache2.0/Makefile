@@ -2,7 +2,7 @@
 # $Id:$
 
 #APXS2=/path/to/your/apxs
-APXS2=`which apxs2`
+APXS2=`which apxs2 || which apxs`
 
 default:
 	@echo mod_removeip:
